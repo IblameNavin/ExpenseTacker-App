@@ -9,6 +9,9 @@ const App = () => {
   const [editExpId, setEditExpId] = useState(null);
   const [editName, setEditName] = useState("");
   const [editAmount, setEditAmount] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("")
+  const [date, setDate] = useState("")
+  
 
  const addExpenseOnSearch = (e)=>{
   setAddExpenseInput(e.target.value)
@@ -18,11 +21,13 @@ const App = () => {
   setAddAmountInput(e.target.value)
  }
 
+
+
+ // Cancel Edit
  const cancelEdit = ()=>{
   setEditAmount("")
     setEditExpId(null)
     setEditName("")
-  
  }
 
 
@@ -52,10 +57,14 @@ const App = () => {
       id: Date.now(),
       name: addExpenseInput,
       amount: addAmountInput,
+      category : selectedCategory,
+      date : date
     };
     setExpenses((prev)=>[...prev, newExp]);
     setAddExpenseInput("");
     setAddAmountInput("");
+    setSelectedCategory("")
+    setDate("")
   };
 
   // Delete expense
@@ -76,6 +85,10 @@ const App = () => {
         setEditAmount={setEditAmount}
         addExpenseOnSearch = {addExpenseOnSearch}
         addAmountOnSearch = {addAmountOnSearch}
+        setSelectedCategory = {setSelectedCategory}
+         setDate = {setDate}
+         selectedCategory = {selectedCategory}
+         date = {date}
       />
 
       <ExpenseList
@@ -85,6 +98,7 @@ const App = () => {
         editExpId={editExpId}
         saveEdit = {saveEdit}
         cancelEdit = {cancelEdit}
+        
       />
     </div>
   );
