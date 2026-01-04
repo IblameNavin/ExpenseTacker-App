@@ -1,6 +1,6 @@
 import React from "react";
 
-const ExpenseForm = ({addExpenseOnSearch, addAmountOnSearch, addExpenses, editExpId, value1, value2 , setEditName, setEditAmount}) => {
+const ExpenseForm = ({addExpenseOnSearch, addAmountOnSearch, addExpenses, editExpId, value1, value2 , setEditName, setEditAmount, setDate, setSelectedCategory , selectedCategory, date}) => {
 
   const handleSubmit = (e)=>{
     e.preventDefault()
@@ -37,8 +37,25 @@ const ExpenseForm = ({addExpenseOnSearch, addAmountOnSearch, addExpenses, editEx
         />
         </>
       }
+       
+       <div className="">
+        <label className="">Filter By Category</label>
+       <select name="" id="" className="border p-2 rounded w-full" value={selectedCategory} onChange={(e)=>setSelectedCategory(e.target.value)} > 
+        <option value="">Select Category</option>
+        <option value="Food">Food</option>
+        <option value="Clothes">Clothes</option>
+        <option value="Travelling">Travelling</option>
+        <option value="Entertainment">Entertainment</option>
+       </select>
+       </div>
       
-      
+
+     <input
+  type="date" value={date}
+  onChange={(e)=>setDate(e.target.value)}
+ 
+  className="border p-2 rounded w-full"
+/>
      
       <button
         type="submit"
