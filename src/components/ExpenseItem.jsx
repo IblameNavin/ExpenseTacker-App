@@ -20,7 +20,7 @@ const ExpenseItem = ({expense, deleteTheExpenses, startEditing, saveEdit, editEx
           <button className="text-blue-500 text-sm cursor-pointer" onClick={cancelEdit}>Cancel</button>
           </>
         ) : (
-          <button className="text-blue-500 text-sm cursor-pointer" onClick={()=>startEditing(expense.id, expense.name, expense.amount)}>Edit</button>
+          <button className="text-blue-500 text-sm cursor-pointer" onClick={()=>startEditing(expense.id, expense.name, expense.amount, expense.category, expense.date)}>Edit</button>
         )}
 
         <button

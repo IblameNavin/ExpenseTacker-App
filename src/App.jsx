@@ -11,6 +11,8 @@ const App = () => {
   const [editAmount, setEditAmount] = useState("");
   const [selectedCategory, setSelectedCategory] = useState("")
   const [date, setDate] = useState("")
+  const [editCategory, setEditCategory] = useState("")
+  const [editDate, setEditDate] = useState("")
   
 
  const addExpenseOnSearch = (e)=>{
@@ -28,26 +30,32 @@ const App = () => {
   setEditAmount("")
     setEditExpId(null)
     setEditName("")
+      setEditCategory("");
+  setEditDate("");
  }
 
 
   // Start editing a particular expense
-  const startEditing = (id, name, amount) => {
+  const startEditing = (id, name, amount, category, date) => {
     setEditExpId(id);
     setEditName(name);
     setEditAmount(amount);
+    setEditCategory(category)
+    setEditDate(date)
   };
 
   // Save edited expense
   const saveEdit = (id) => {
     setExpenses((currExp) =>
       currExp.map((exp) =>
-        exp.id === id ? { ...exp, name: editName, amount: editAmount } : exp
+        exp.id === id ? { ...exp, name: editName, amount: editAmount, category : editCategory, date : editDate} : exp
       )
     );
     setEditExpId(null);
     setEditName("");
     setEditAmount("");
+    setEditCategory("")
+    setEditDate("")
   };
 
   // Add new expense
@@ -66,6 +74,14 @@ const App = () => {
     setSelectedCategory("")
     setDate("")
   };
+  
+
+  // Total Expense
+const totalExpense = expenses.reduce((sum, exp)=>{
+
+  return sum + Number(exp.amount)
+}, 0
+  )
 
   // Delete expense
   const deleteTheExpenses = (id) => {
@@ -77,8 +93,8 @@ const App = () => {
       <h1 className="text-3xl font-bold mb-6 text-center">Expense Tracker</h1>
 
       <ExpenseForm
-        value1={editExpId ? editName : addExpenseInput}
-        value2={editExpId ? editAmount : addAmountInput}
+        nameValue={editExpId ? editName : addExpenseInput}
+        amountValue={editExpId ? editAmount : addAmountInput}
         addExpenses={addExpenses}
         editExpId={editExpId}
         setEditName={setEditName}
@@ -89,6 +105,13 @@ const App = () => {
          setDate = {setDate}
          selectedCategory = {selectedCategory}
          date = {date}
+         expenses = {expenses}
+         totalExpense = {totalExpense}
+           editCategory = {editCategory}
+           setEditCategory = {setEditCategory}
+           setEditDate = {setEditDate}
+            editDate = {editDate}
+           
       />
 
       <ExpenseList
@@ -98,7 +121,7 @@ const App = () => {
         editExpId={editExpId}
         saveEdit = {saveEdit}
         cancelEdit = {cancelEdit}
-        
+      
       />
     </div>
   );
