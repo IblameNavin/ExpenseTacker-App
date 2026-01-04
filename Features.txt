@@ -1,0 +1,6 @@
+1. Total Expenses Calculation
+2. Date/Time for Expenses
+3. Category/Type of Expenses
+4. Search Expenses
+5. Filtering/Sorting
+6. Local Storage
