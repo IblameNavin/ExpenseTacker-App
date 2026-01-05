@@ -1,95 +1,57 @@
 import React from "react";
 
-const ExpenseForm = ({addExpenseOnSearch, addAmountOnSearch, addExpenses, editExpId, nameValue, amountValue , setEditName, setEditAmount, setDate, setSelectedCategory , selectedCategory, date,totalExpense, expenses, editCategory, setEditCategory, editDate,setEditDate}) => {
-
-  const handleSubmit = (e)=>{
-    e.preventDefault()
-    addExpenses()
-  }
+const ExpenseForm = ({ formData, handleChange, onSubmit, editMode }) => {
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    onSubmit();
+  };
 
   return (
     <form className="flex flex-col gap-3 mb-6" onSubmit={handleSubmit}>
-      {/* Edit input */}
-      {editExpId ? 
-
-      <>
-       <input
-        type="text" value={nameValue} onChange={(e)=>setEditName(e.target.value)}
-        placeholder=""  
-        className="border p-2 rounded w-full"
-        />
-       <input
-        type="number" 
-        placeholder="Amount" value={amountValue} onChange={(e)=>setEditAmount(e.target.value)}
-        className="border p-2 rounded w-full"
-        />
-        </>
-      : 
-      <>
       <input
         type="text"
-        placeholder="Expense Name" value={nameValue} onChange={addExpenseOnSearch}
+        name="name"
+        placeholder="Expense Name"
+        value={formData.name}
+        onChange={handleChange}
         className="border p-2 rounded w-full"
-        />
+      />
+
       <input
         type="number"
-        placeholder="Amount" value={amountValue} onChange={addAmountOnSearch}
+        name="amount"
+        placeholder="Amount"
+        value={formData.amount}
+        onChange={handleChange}
         className="border p-2 rounded w-full"
-        />
-        </>
-      }
-       
-       {/* Edit Category Input  */}
-       {editExpId ? 
-        <div className="">
-       <select name="" id="" className="border p-2 rounded w-full" value={editCategory} onChange={(e)=>setEditCategory(e.target.value)} > 
+      />
+
+      <select
+        name="category"
+        value={formData.category}
+        onChange={handleChange}
+        className="border p-2 rounded w-full"
+      >
         <option value="">Select Category</option>
         <option value="Food">Food</option>
         <option value="Clothes">Clothes</option>
         <option value="Travelling">Travelling</option>
         <option value="Entertainment">Entertainment</option>
-       </select>
-       </div> 
-       :
-       <div className="">
-       <select name="" id="" className="border p-2 rounded w-full" value={selectedCategory} onChange={(e)=>setSelectedCategory(e.target.value)} > 
-        <option value="">Select Category</option>
-        <option value="Food">Food</option>
-        <option value="Clothes">Clothes</option>
-        <option value="Travelling">Travelling</option>
-        <option value="Entertainment">Entertainment</option>
-       </select>
-       </div>
-      
-      }
-           
-        {editExpId ? 
-           <input
-  type="date" value={editDate}
-  onChange={(e)=>setEditDate(e.target.value)}
-  className="border p-2 rounded w-full"
-/>
-         :
-     <input
-  type="date" value={date}
-  onChange={(e)=>setDate(e.target.value)}
-  className="border p-2 rounded w-full"
-/>
-         }
+      </select>
 
-     
-
-     {expenses.length > 0 && 
-      <div className="text-right ">
-        ${totalExpense}
-      </div>
-     }
+      <input
+        type="date"
+        name="date"
+        value={formData.date}
+        onChange={handleChange}
+        className="border p-2 rounded w-full"
+      />
 
       <button
         type="submit"
         className="bg-blue-500 text-white py-2 rounded hover:bg-blue-600 transition cursor-pointer"
       >
-        Add Expense
+        {editMode ? "Save Expense" : "Add Expense"}
       </button>
     </form>
   );

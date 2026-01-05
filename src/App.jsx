@@ -3,89 +3,58 @@ import ExpenseForm from "./components/ExpenseForm";
 import ExpenseList from "./components/ExpenseList";
 
 const App = () => {
-  const [addExpenseInput, setAddExpenseInput] = useState("");
-  const [addAmountInput, setAddAmountInput] = useState("");
   const [expenses, setExpenses] = useState([]);
   const [editExpId, setEditExpId] = useState(null);
-  const [editName, setEditName] = useState("");
-  const [editAmount, setEditAmount] = useState("");
-  const [selectedCategory, setSelectedCategory] = useState("")
-  const [date, setDate] = useState("")
-  const [editCategory, setEditCategory] = useState("")
-  const [editDate, setEditDate] = useState("")
-  
 
- const addExpenseOnSearch = (e)=>{
-  setAddExpenseInput(e.target.value)
- }
+  const [formData, setFormData] = useState({
+    name: "",
+    amount: "",
+    category: "",
+    date: "",
+  });
 
-  const addAmountOnSearch = (e)=>{
-  setAddAmountInput(e.target.value)
- }
-
-
-
- // Cancel Edit
- const cancelEdit = ()=>{
-  setEditAmount("")
-    setEditExpId(null)
-    setEditName("")
-      setEditCategory("");
-  setEditDate("");
- }
-
-
-  // Start editing a particular expense
-  const startEditing = (id, name, amount, category, date) => {
-    setEditExpId(id);
-    setEditName(name);
-    setEditAmount(amount);
-    setEditCategory(category)
-    setEditDate(date)
+  const handleChange = (e) => {
+    const { name, value } = e.target;
+    setFormData((prev) => ({ ...prev, [name]: value }));
   };
 
-  // Save edited expense
-  const saveEdit = (id) => {
-    setExpenses((currExp) =>
-      currExp.map((exp) =>
-        exp.id === id ? { ...exp, name: editName, amount: editAmount, category : editCategory, date : editDate} : exp
-      )
-    );
+  const addOrUpdateExpense = () => {
+    if (!formData.name.trim() || !formData.amount.trim()) return;
+
+    if (editExpId) {
+      setExpenses((prev) =>
+        prev.map((exp) =>
+          exp.id === editExpId ? { ...exp, ...formData } : exp
+        )
+      );
+      setEditExpId(null);
+    } else {
+      setExpenses((prev) => [
+        ...prev,
+        { id: Date.now(), ...formData },
+      ]);
+    }
+
+    setFormData({ name: "", amount: "", category: "", date: "" });
+  };
+
+  const startEditing = (expense) => {
+    setEditExpId(expense.id);
+    setFormData({
+      name: expense.name,
+      amount: expense.amount,
+      category: expense.category,
+      date: expense.date,
+    });
+  };
+
+  const cancelEdit = () => {
     setEditExpId(null);
-    setEditName("");
-    setEditAmount("");
-    setEditCategory("")
-    setEditDate("")
+    setFormData({ name: "", amount: "", category: "", date: "" });
   };
 
-  // Add new expense
-  const addExpenses = () => {
-    if (!addExpenseInput.trim() || !addAmountInput.trim()) return;
-    const newExp = {
-      id: Date.now(),
-      name: addExpenseInput,
-      amount: addAmountInput,
-      category : selectedCategory,
-      date : date
-    };
-    setExpenses((prev)=>[...prev, newExp]);
-    setAddExpenseInput("");
-    setAddAmountInput("");
-    setSelectedCategory("")
-    setDate("")
-  };
-  
-
-  // Total Expense
-const totalExpense = expenses.reduce((sum, exp)=>{
-
-  return sum + Number(exp.amount)
-}, 0
-  )
-
-  // Delete expense
-  const deleteTheExpenses = (id) => {
-    setExpenses((currExp) => currExp.filter((exp) => exp.id !== id));
+  const deleteExpense = (id) => {
+    setExpenses((prev) => prev.filter((exp) => exp.id !== id));
   };
 
   return (
@@ -93,35 +62,18 @@ const totalExpense = expenses.reduce((sum, exp)=>{
       <h1 className="text-3xl font-bold mb-6 text-center">Expense Tracker</h1>
 
       <ExpenseForm
-        nameValue={editExpId ? editName : addExpenseInput}
-        amountValue={editExpId ? editAmount : addAmountInput}
-        addExpenses={addExpenses}
-        editExpId={editExpId}
-        setEditName={setEditName}
-        setEditAmount={setEditAmount}
-        addExpenseOnSearch = {addExpenseOnSearch}
-        addAmountOnSearch = {addAmountOnSearch}
-        setSelectedCategory = {setSelectedCategory}
-         setDate = {setDate}
-         selectedCategory = {selectedCategory}
-         date = {date}
-         expenses = {expenses}
-         totalExpense = {totalExpense}
-           editCategory = {editCategory}
-           setEditCategory = {setEditCategory}
-           setEditDate = {setEditDate}
-            editDate = {editDate}
-           
+        formData={formData}
+        handleChange={handleChange}
+        onSubmit={addOrUpdateExpense}
+        editMode={!!editExpId}
       />
 
       <ExpenseList
         expenses={expenses}
-        deleteTheExpenses={deleteTheExpenses}
         startEditing={startEditing}
+        deleteExpense={deleteExpense}
+        cancelEdit={cancelEdit}
         editExpId={editExpId}
-        saveEdit = {saveEdit}
-        cancelEdit = {cancelEdit}
-      
       />
     </div>
   );
