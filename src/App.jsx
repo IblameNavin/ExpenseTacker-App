@@ -3,58 +3,98 @@ import ExpenseForm from "./components/ExpenseForm";
 import ExpenseList from "./components/ExpenseList";
 
 const App = () => {
+  const [addExpenseInput, setAddExpenseInput] = useState("");
+  const [addAmountInput, setAddAmountInput] = useState("");
   const [expenses, setExpenses] = useState([]);
   const [editExpId, setEditExpId] = useState(null);
+  const [editName, setEditName] = useState("");
+  const [editAmount, setEditAmount] = useState("");
+  const [selectedCategory, setSelectedCategory] = useState("");
+  const [date, setDate] = useState("");
+  const [editCategory, setEditCategory] = useState("");
+  const [editDate, setEditDate] = useState("");
+  const [filterCategory, setFilterCategory] = useState("");
 
-  const [formData, setFormData] = useState({
-    name: "",
-    amount: "",
-    category: "",
-    date: "",
-  });
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData((prev) => ({ ...prev, [name]: value }));
+  const addExpenseOnSearch = (e) => {
+    setAddExpenseInput(e.target.value);
   };
 
-  const addOrUpdateExpense = () => {
-    if (!formData.name.trim() || !formData.amount.trim()) return;
-
-    if (editExpId) {
-      setExpenses((prev) =>
-        prev.map((exp) =>
-          exp.id === editExpId ? { ...exp, ...formData } : exp
-        )
-      );
-      setEditExpId(null);
-    } else {
-      setExpenses((prev) => [
-        ...prev,
-        { id: Date.now(), ...formData },
-      ]);
-    }
-
-    setFormData({ name: "", amount: "", category: "", date: "" });
+  const addAmountOnSearch = (e) => {
+    setAddAmountInput(e.target.value);
   };
 
-  const startEditing = (expense) => {
-    setEditExpId(expense.id);
-    setFormData({
-      name: expense.name,
-      amount: expense.amount,
-      category: expense.category,
-      date: expense.date,
-    });
-  };
+  // Logic to Filter Categories
+  const filterExpenses = filterCategory ? expenses.filter((exp)=> {
+    return exp.category === filterCategory
+  }) : expenses
+     
+  
 
+  // Cancel Edit
   const cancelEdit = () => {
+    setEditAmount("");
     setEditExpId(null);
-    setFormData({ name: "", amount: "", category: "", date: "" });
+    setEditName("");
+    setEditCategory("");
+    setEditDate("");
   };
 
-  const deleteExpense = (id) => {
-    setExpenses((prev) => prev.filter((exp) => exp.id !== id));
+  // Start editing a particular expense
+  const startEditing = (id, name, amount, category, date) => {
+    setEditExpId(id);
+    setEditName(name);
+    setEditAmount(amount);
+    setEditCategory(category);
+    setEditDate(date);
+  };
+
+  // Save edited expense
+  const saveEdit = (id) => {
+    setExpenses((currExp) =>
+      currExp.map((exp) =>
+        exp.id === id
+          ? {
+              ...exp,
+              name: editName,
+              amount: editAmount,
+              category: editCategory,
+              date: editDate,
+            }
+          : exp
+      )
+    );
+    setEditExpId(null);
+    setEditName("");
+    setEditAmount("");
+    setEditCategory("");
+    setEditDate("");
+  };
+
+  // Add new expense
+  const addExpenses = () => {
+    if (!addExpenseInput.trim() || !addAmountInput.trim()) return;
+    const newExp = {
+      id: Date.now(),
+      name: addExpenseInput,
+      amount: addAmountInput,
+      category: selectedCategory,
+      date: date,
+    };
+    setExpenses((prev) => [...prev, newExp]);
+    setAddExpenseInput("");
+    setAddAmountInput("");
+    setSelectedCategory("");
+    setDate("");
+  };
+
+  // Total Expense
+  const totalExpense = expenses.reduce((sum, exp) => {
+    return sum + Number(exp.amount);
+  }, 0);
+
+  // Delete expense
+  const deleteTheExpenses = (id) => {
+    setExpenses((currExp) => currExp.filter((exp) => exp.id !== id));
   };
 
   return (
@@ -62,18 +102,35 @@ const App = () => {
       <h1 className="text-3xl font-bold mb-6 text-center">Expense Tracker</h1>
 
       <ExpenseForm
-        formData={formData}
-        handleChange={handleChange}
-        onSubmit={addOrUpdateExpense}
-        editMode={!!editExpId}
+        nameValue={editExpId ? editName : addExpenseInput}
+        amountValue={editExpId ? editAmount : addAmountInput}
+        addExpenses={addExpenses}
+        editExpId={editExpId}
+        setEditName={setEditName}
+        setEditAmount={setEditAmount}
+        addExpenseOnSearch={addExpenseOnSearch}
+        addAmountOnSearch={addAmountOnSearch}
+        setSelectedCategory={setSelectedCategory}
+        setDate={setDate}
+        selectedCategory={selectedCategory}
+        date={date}
+        expenses={expenses}
+        totalExpense={totalExpense}
+        editCategory={editCategory}
+        setEditCategory={setEditCategory}
+        setEditDate={setEditDate}
+        editDate={editDate}
+        filterCategory={filterCategory}
+        setFilterCategory={setFilterCategory}
       />
 
       <ExpenseList
-        expenses={expenses}
+        expenses={filterExpenses}
+        deleteTheExpenses={deleteTheExpenses}
         startEditing={startEditing}
-        deleteExpense={deleteExpense}
-        cancelEdit={cancelEdit}
         editExpId={editExpId}
+        saveEdit={saveEdit}
+        cancelEdit={cancelEdit}
       />
     </div>
   );
