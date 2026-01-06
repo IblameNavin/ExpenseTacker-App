@@ -9,5 +9,4 @@ export const localStorageGetItem = ()=>{
         const data = localStorage.getItem(expenseTracker)
         if(!data) return []
         return JSON.parse(data)
-  
 }
