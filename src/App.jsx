@@ -1,11 +1,17 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import ExpenseForm from "./components/ExpenseForm";
 import ExpenseList from "./components/ExpenseList";
+import { localStorageGetItem, localStorageSetItem } from "./components/LocalStorage";
 
 const App = () => {
+
+  
+
   const [addExpenseInput, setAddExpenseInput] = useState("");
   const [addAmountInput, setAddAmountInput] = useState("");
-  const [expenses, setExpenses] = useState([]);
+
+  const [expenses, setExpenses] = useState(()=>localStorageGetItem())
+
   const [editExpId, setEditExpId] = useState(null);
   const [editName, setEditName] = useState("");
   const [editAmount, setEditAmount] = useState("");
@@ -33,6 +39,10 @@ const App = () => {
   }) 
      
   
+  // Adding data to localStorage
+  useEffect(() => {
+  localStorageSetItem(expenses);
+}, [expenses]);
 
   // Cancel Edit
   const cancelEdit = () => {

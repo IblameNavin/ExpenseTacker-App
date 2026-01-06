@@ -3,5 +3,5 @@
 3. Category/Type of Expenses   DONEEEE
 4. Search Expenses             DONEEEE
 5. Filtering/Sorting
-6. Local Storage
+6. Local Storage               DONEEEE
 
