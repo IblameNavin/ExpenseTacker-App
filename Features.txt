@@ -5,3 +5,12 @@
 5. Filtering/Sorting
 6. Local Storage               DONEEEE
 
+
+
+ReDoing: 
+
+1. ADD / EDIT / DELETE Features
+2. Total Expense Show   
+3. Select Category / Date Feature
+4. Search By Name / Category Feature
+5. Save To Local Storage Feature
