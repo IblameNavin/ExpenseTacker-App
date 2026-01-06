@@ -14,6 +14,7 @@ const App = () => {
   const [editCategory, setEditCategory] = useState("");
   const [editDate, setEditDate] = useState("");
   const [filterCategory, setFilterCategory] = useState("");
+  const [searchName, setSearchName] = useState("")
 
   const addExpenseOnSearch = (e) => {
     setAddExpenseInput(e.target.value);
@@ -24,9 +25,12 @@ const App = () => {
   };
 
   // Logic to Filter Categories
-  const filterExpenses = filterCategory ? expenses.filter((exp)=> {
-    return exp.category === filterCategory
-  }) : expenses
+  const filterExpenses =  expenses.filter((exp)=> {
+    const categoryMatch = filterCategory ? exp.category === filterCategory : true
+    const nameMatch = searchName ? exp.name.toLowerCase().includes(searchName.toLowerCase()):true
+
+    return categoryMatch && nameMatch
+  }) 
      
   
 
@@ -122,6 +126,8 @@ const App = () => {
         editDate={editDate}
         filterCategory={filterCategory}
         setFilterCategory={setFilterCategory}
+        setSearchName = {setSearchName}
+        searchName = {searchName}
       />
 
       <ExpenseList

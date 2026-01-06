@@ -1,7 +1,7 @@
-1. Total Expenses Calculation
+1. Total Expenses Calculation  DONEEEE
 2. Date/Time for Expenses      DONEEEE
 3. Category/Type of Expenses   DONEEEE
-4. Search Expenses
+4. Search Expenses             DONEEEE
 5. Filtering/Sorting
 6. Local Storage
 
