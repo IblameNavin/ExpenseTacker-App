@@ -1,6 +1,6 @@
 import React from "react";
 
-const ExpenseForm = ({handleOnChangeName, handleOnChangeAmount, addName, addAmount, addExpense, editExpId, editName , editAmount, setEditName, setEditAmount, totalExpense,expenses, selectCategory, setSelectCategory, setDate, setEditDate, setEditCategory, editCategory, editDate}) => {
+const ExpenseForm = ({handleOnChangeName, handleOnChangeAmount, addName, addAmount, addExpense, editExpId, editName , editAmount, setEditName, setEditAmount, totalExpense,expenses, selectCategory, setSelectCategory, setDate, setEditDate, setEditCategory, editCategory, editDate, setFilterCategory, setFilterName, date}) => {
 
  const handleSubmit = (e)=>{
   e.preventDefault()
@@ -54,7 +54,29 @@ const ExpenseForm = ({handleOnChangeName, handleOnChangeAmount, addName, addAmou
     
 
         {/* INPUT FOR SHOWING DATE */}
-     <input type="date" className="border p-2" value={editExpId != null ? editDate : setEditDate } onChange={(e)=>{editExpId != null ? setEditDate(e.target.value) : setDate(e.target.value)}}/>
+     <input type="date" className="border p-2" value={editExpId != null ? editDate : date } onChange={(e)=>{editExpId != null ? setEditDate(e.target.value) : setDate(e.target.value)}}/>
+
+
+     {/* SEARCH CATEGORY  */}
+     {expenses.length > 0 && 
+      <div className="">
+      <select name="" id="" className="border p-2" onChange={(e)=>setFilterCategory(e.target.value)} >
+        <option value="">Click To Filter Category</option>
+        <option value="Food">Food</option>
+        <option value="Entertainment">Entertainment</option>
+        <option value="Travelling">Travelling</option>
+        <option value="Clothes">Clothes</option>
+        <option value="Furniture">Furniture</option>
+        <option value="Skincare">Skincare</option>
+      </select>
+     </div>
+     }
+
+     {/* SEARCH FROM NAME  */}
+     {expenses.length > 0 &&
+     <input placeholder="Search By Name" type="text" onChange={(e)=>setFilterName(e.target.value)} />
+     }
+
 
 
          {/* UI FOR TOTAL EXPENSE  */}

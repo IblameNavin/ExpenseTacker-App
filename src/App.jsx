@@ -15,7 +15,8 @@ const App = () => {
   const [date, setDate] = useState("")
   const [editCategory, setEditCategory] = useState("")
   const [editDate, setEditDate] = useState("")
-
+  const [filterCategory, setFilterCategory] = useState("")
+  const [filterName, setFilterName] = useState("")
 
 
   const handleOnChangeName = (e)=>{
@@ -82,18 +83,26 @@ const cancelEdit = ()=>{
     return sum + Number(exp.amount)
   }, 0)
 
+
  useEffect(() => {
    localStorageSetItem(expenses)
  }, [expenses])
  
+ 
+const filteredExpenses = expenses.filter((exp)=>{
+  const matchCategory =  !filterCategory || exp.category === filterCategory
+  const matchName = !filterName || exp.name.toLowerCase().includes(filterName.toLowerCase())
+
+  return matchCategory && matchName
+})
 
   return (
     <div className="max-w-xl mx-auto p-6 bg-gray-100 min-h-screen">
       <h1 className="text-3xl font-bold mb-6 text-center">Expense Tracker</h1>
 
-      <ExpenseForm handleOnChangeName = {handleOnChangeName} handleOnChangeAmount = {handleOnChangeAmount} addName = {addName} addAmount = {addAmount} addExpense = {addExpense} editExpId = {editExpId} expenses = {expenses} editName = {editName} editAmount = {editAmount} setEditName = {setEditName} setEditAmount = {setEditAmount} saveEdit = {saveEdit} totalExpense = {totalExpense} selectCategory = {selectCategory} date = {date} setSelectCategory = {setSelectCategory} setDate = {setDate} setEditCategory = {setEditCategory} setEditDate = {setEditDate} editCategory = {editCategory} editDate = {editDate} />
+      <ExpenseForm handleOnChangeName = {handleOnChangeName} handleOnChangeAmount = {handleOnChangeAmount} addName = {addName} addAmount = {addAmount} addExpense = {addExpense} editExpId = {editExpId} expenses = {expenses} editName = {editName} editAmount = {editAmount} setEditName = {setEditName} setEditAmount = {setEditAmount} saveEdit = {saveEdit} totalExpense = {totalExpense} selectCategory = {selectCategory} date = {date} setSelectCategory = {setSelectCategory} setDate = {setDate} setEditCategory = {setEditCategory} setEditDate = {setEditDate} editCategory = {editCategory} editDate = {editDate} setFilterCategory = {setFilterCategory} setFilterName = {setFilterName} />
 
-      <ExpenseList  expenses = {expenses}  deleteTheExpense = {deleteTheExpense} startEditing = {startEditing} saveEdit = {saveEdit} editExpId = {editExpId} cancelEdit = {cancelEdit}/>
+      <ExpenseList  expenses = {filteredExpenses}  deleteTheExpense = {deleteTheExpense} startEditing = {startEditing} saveEdit = {saveEdit} editExpId = {editExpId} cancelEdit = {cancelEdit}/>
     </div>
   );
 };
