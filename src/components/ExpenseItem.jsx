@@ -16,7 +16,7 @@ const ExpenseItem = ({expense, deleteTheExpense, startEditing, saveEdit, editExp
              {editExpId === expense.id ?  
              <button className="text-blue-500 text-sm cursor-pointer" onClick={()=>saveEdit(expense.id)}>save</button>
              : 
-             <button className="text-blue-500 text-sm cursor-pointer" onClick={()=>startEditing(expense.id, expense.name, expense.amount)}>Edit</button>
+             <button className="text-blue-500 text-sm cursor-pointer" onClick={()=>startEditing(expense.id, expense.name, expense.amount, expense.category, expense.date)}>Edit</button>
              }
               
         

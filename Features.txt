@@ -11,6 +11,6 @@ ReDoing:
 
 1. ADD / EDIT / DELETE Features         DONEEEE
 2. Total Expense Show                   DONEEEE 
-3. Select Category / Date Feature       
-4. Search By Name / Category Feature
+3. Select Category / Date Feature       DONEEEE
+4. Search By Name / Category Feature    DONEEEE
 5. Save To Local Storage Feature        DONEEEE

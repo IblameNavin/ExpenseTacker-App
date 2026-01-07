@@ -50,17 +50,19 @@ const deleteTheExpense = (id)=>{
   )
 }
 
-const startEditing = (id, currName, currAmount)=>{
+const startEditing = (id, currName, currAmount, category, date)=>{
   setEditExpId(id)
   setEditName(currName)
   setEditAmount(currAmount)
+  setEditCategory(category)
+  setEditDate(date)
 }
 
 
 const saveEdit = (id)=>{
    setExpenses((currExp)=>
    currExp.map((exp)=>
-   exp.id === id ? {...exp, name : editName, amount : editAmount} : exp
+   exp.id === id ? {...exp, name : editName, amount : editAmount, category: editCategory, date : editDate} : exp
   )
   )
   setEditExpId(null)
@@ -89,7 +91,7 @@ const cancelEdit = ()=>{
     <div className="max-w-xl mx-auto p-6 bg-gray-100 min-h-screen">
       <h1 className="text-3xl font-bold mb-6 text-center">Expense Tracker</h1>
 
-      <ExpenseForm handleOnChangeName = {handleOnChangeName} handleOnChangeAmount = {handleOnChangeAmount} addName = {addName} addAmount = {addAmount} addExpense = {addExpense} editExpId = {editExpId} expenses = {expenses} editName = {editName} editAmount = {editAmount} setEditName = {setEditName} setEditAmount = {setEditAmount} saveEdit = {saveEdit} totalExpense = {totalExpense} selectCategory = {selectCategory} date = {date} setSelectCategory = {setSelectCategory} setDate = {setDate} />
+      <ExpenseForm handleOnChangeName = {handleOnChangeName} handleOnChangeAmount = {handleOnChangeAmount} addName = {addName} addAmount = {addAmount} addExpense = {addExpense} editExpId = {editExpId} expenses = {expenses} editName = {editName} editAmount = {editAmount} setEditName = {setEditName} setEditAmount = {setEditAmount} saveEdit = {saveEdit} totalExpense = {totalExpense} selectCategory = {selectCategory} date = {date} setSelectCategory = {setSelectCategory} setDate = {setDate} setEditCategory = {setEditCategory} setEditDate = {setEditDate} editCategory = {editCategory} editDate = {editDate} />
 
       <ExpenseList  expenses = {expenses}  deleteTheExpense = {deleteTheExpense} startEditing = {startEditing} saveEdit = {saveEdit} editExpId = {editExpId} cancelEdit = {cancelEdit}/>
     </div>

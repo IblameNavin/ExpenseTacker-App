@@ -1,6 +1,6 @@
 import React from "react";
 
-const ExpenseForm = ({handleOnChangeName, handleOnChangeAmount, addName, addAmount, addExpense, editExpId, editName , editAmount, setEditName, setEditAmount, totalExpense,expenses, selectCategory, date, setSelectCategory, setDate }) => {
+const ExpenseForm = ({handleOnChangeName, handleOnChangeAmount, addName, addAmount, addExpense, editExpId, editName , editAmount, setEditName, setEditAmount, totalExpense,expenses, selectCategory, setSelectCategory, setDate, setEditDate, setEditCategory, editCategory, editDate}) => {
 
  const handleSubmit = (e)=>{
   e.preventDefault()
@@ -40,8 +40,8 @@ const ExpenseForm = ({handleOnChangeName, handleOnChangeAmount, addName, addAmou
 
 
      {/* UI FOR SELECTING CATEGORY */}
-     <div className="">
-      <select name="" id="" className="border p-2" value={selectCategory} onChange={(e)=>setSelectCategory(e.target.value)}>
+      <div className="">
+      <select name="" id="" className="border p-2" value={editExpId != null ? editCategory : selectCategory} onChange = {(e)=>{editExpId != null ? setEditCategory(e.target.value) : setSelectCategory(e.target.value)}}>
         <option value="">All</option>
         <option value="Food">Food</option>
         <option value="Entertainment">Entertainment</option>
@@ -51,9 +51,10 @@ const ExpenseForm = ({handleOnChangeName, handleOnChangeAmount, addName, addAmou
         <option value="Skincare">Skincare</option>
       </select>
      </div>
+    
 
         {/* INPUT FOR SHOWING DATE */}
-     <input type="date" className="border p-2" value={date} onChange={(e)=>setDate(e.target.value)}/>
+     <input type="date" className="border p-2" value={editExpId != null ? editDate : setEditDate } onChange={(e)=>{editExpId != null ? setEditDate(e.target.value) : setDate(e.target.value)}}/>
 
 
          {/* UI FOR TOTAL EXPENSE  */}
