@@ -4,9 +4,11 @@ const ExpenseItem = ({expense, deleteTheExpense, startEditing, saveEdit, editExp
   return (
     <div className="flex justify-between items-center border p-3 rounded shadow-sm bg-gray-50">
       <span>{expense.name}</span>
+      <span>{expense.category}</span>
       
       <div className="flex items-center gap-2">
         <span className="font-semibold">${expense.amount}</span>
+        <span className="font-semibold">{expense.date}</span>
             
 
 

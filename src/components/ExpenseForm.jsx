@@ -1,6 +1,6 @@
 import React from "react";
 
-const ExpenseForm = ({handleOnChangeName, handleOnChangeAmount, addName, addAmount, addExpense, editExpId, editName , editAmount, setEditName, setEditAmount, totalExpense,expenses }) => {
+const ExpenseForm = ({handleOnChangeName, handleOnChangeAmount, addName, addAmount, addExpense, editExpId, editName , editAmount, setEditName, setEditAmount, totalExpense,expenses, selectCategory, date, setSelectCategory, setDate }) => {
 
  const handleSubmit = (e)=>{
   e.preventDefault()
@@ -10,6 +10,7 @@ const ExpenseForm = ({handleOnChangeName, handleOnChangeAmount, addName, addAmou
     <form className="flex flex-col gap-3 mb-6" onSubmit={handleSubmit}>  
     {editExpId != null ?
 
+  //  LOGIC FOR ADDING AND EDITING INPUTS 
     <>
       <input
         type="text" value={editName}
@@ -36,6 +37,26 @@ const ExpenseForm = ({handleOnChangeName, handleOnChangeAmount, addName, addAmou
         />
         </>
     }
+
+
+     {/* UI FOR SELECTING CATEGORY */}
+     <div className="">
+      <select name="" id="" className="border p-2" value={selectCategory} onChange={(e)=>setSelectCategory(e.target.value)}>
+        <option value="">All</option>
+        <option value="Food">Food</option>
+        <option value="Entertainment">Entertainment</option>
+        <option value="Travelling">Travelling</option>
+        <option value="Clothes">Clothes</option>
+        <option value="Furniture">Furniture</option>
+        <option value="Skincare">Skincare</option>
+      </select>
+     </div>
+
+        {/* INPUT FOR SHOWING DATE */}
+     <input type="date" className="border p-2" value={date} onChange={(e)=>setDate(e.target.value)}/>
+
+
+         {/* UI FOR TOTAL EXPENSE  */}
           {expenses.length > 0 &&
         <span className="text-right text-md">Total Expense : ${totalExpense}</span>
           }
