@@ -105,6 +105,6 @@ const filteredExpenses = expenses.filter((exp)=>{
       <ExpenseList  expenses = {filteredExpenses}  deleteTheExpense = {deleteTheExpense} startEditing = {startEditing} saveEdit = {saveEdit} editExpId = {editExpId} cancelEdit = {cancelEdit}/>
     </div>
   );
-};
+}
 
 export default App;
