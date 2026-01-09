@@ -1,6 +1,6 @@
 import React from "react";
 
-const ExpenseForm = ({handleOnChangeName, handleOnChangeAmount, addName, addAmount, addExpense, editExpId, editName , editAmount, setEditName, setEditAmount, totalExpense,expenses, selectCategory, setSelectCategory, setDate, setEditDate, setEditCategory, editCategory, editDate, setFilterCategory, setFilterName, date}) => {
+const ExpenseForm = ({handleOnChangeName, handleOnChangeAmount, addName, addAmount, addExpense, editExpId, editName , editAmount, setEditName, setEditAmount, totalExpense,expenses, selectCategory, setSelectCategory, setDate, setEditDate, setEditCategory, editCategory, editDate, setFilterCategory, setFilterName, date, }) => {
 
  const handleSubmit = (e)=>{
   e.preventDefault()
@@ -76,6 +76,9 @@ const ExpenseForm = ({handleOnChangeName, handleOnChangeAmount, addName, addAmou
      {expenses.length > 0 &&
      <input placeholder="Search By Name" type="text" onChange={(e)=>setFilterName(e.target.value)} />
      }
+
+
+        
 
 
 

@@ -93,8 +93,11 @@ const filteredExpenses = expenses.filter((exp)=>{
   const matchCategory =  !filterCategory || exp.category === filterCategory
   const matchName = !filterName || exp.name.toLowerCase().includes(filterName.toLowerCase())
 
+
   return matchCategory && matchName
 })
+
+
 
   return (
     <div className="max-w-xl mx-auto p-6 bg-gray-100 min-h-screen">
